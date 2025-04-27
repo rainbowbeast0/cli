@@ -56,6 +56,12 @@ if ! command -v productbuild &> /dev/null; then
 fi
 # end of os requirements check
 
+# Ensure signing is mandatory if APPLE_DEVELOPER_INSTALLER_ID is set
+if [ -z "$APPLE_DEVELOPER_INSTALLER_ID" ]; then
+  echo "error: APPLE_DEVELOPER_INSTALLER_ID must be set to sign the .pkg file." >&2
+  exit 1
+fi
+
 # gh-binary paths
 bin_path="/bin/gh"
 arm64_bin="./dist/macos_darwin_arm64$bin_path"
